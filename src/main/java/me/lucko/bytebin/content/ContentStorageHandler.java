@@ -28,7 +28,7 @@ package me.lucko.bytebin.content;
 import com.github.benmanes.caffeine.cache.CacheLoader;
 
 import me.lucko.bytebin.util.ContentEncoding;
-import me.lucko.bytebin.util.Gzip;
+import me.lucko.bytebin.util.Zstd;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -180,7 +180,7 @@ public class ContentStorageHandler implements CacheLoader<String, Content> {
 
     public void save(String key, String contentType, byte[] content, long expiry, String authKey, boolean requiresCompression, String encoding, CompletableFuture<Content> future) {
         if (requiresCompression) {
-            content = Gzip.compress(content);
+            content = Zstd.compress(content);
         }
 
         // add directly to the cache

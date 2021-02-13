@@ -27,9 +27,9 @@ package me.lucko.bytebin.http;
 
 import me.lucko.bytebin.content.ContentCache;
 import me.lucko.bytebin.util.ContentEncoding;
-import me.lucko.bytebin.util.Gzip;
 import me.lucko.bytebin.util.RateLimiter;
 import me.lucko.bytebin.util.TokenGenerator;
+import me.lucko.bytebin.util.Zstd;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -116,11 +116,11 @@ public final class GetHandler implements ReqHandler {
                 return;
             }
 
-            // if it's compressed using gzip, we will uncompress on the server side
-            if (contentEncodingStrings.size() == 1 && contentEncodingStrings.get(0).equals(ContentEncoding.GZIP)) {
+            // if it's compressed using zstd, we will uncompress on the server side
+            if (contentEncodingStrings.size() == 1 && contentEncodingStrings.get(0).equals(ContentEncoding.ZSTD)) {
                 byte[] uncompressed;
                 try {
-                    uncompressed = Gzip.decompress(content.getContent());
+                    uncompressed = Zstd.decompress(content.getContent());
                 } catch (IOException e) {
                     cors(req.response()).code(404).plain("Unable to uncompress data").done();
                     return;

@@ -29,9 +29,9 @@ import me.lucko.bytebin.content.Content;
 import me.lucko.bytebin.content.ContentCache;
 import me.lucko.bytebin.content.ContentStorageHandler;
 import me.lucko.bytebin.util.ContentEncoding;
-import me.lucko.bytebin.util.Gzip;
 import me.lucko.bytebin.util.RateLimiter;
 import me.lucko.bytebin.util.TokenGenerator;
+import me.lucko.bytebin.util.Zstd;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -107,8 +107,8 @@ public final class PutHandler implements ReqHandler {
 
             // compress if necessary
             if (newEncodings.isEmpty()) {
-                newContent.set(Gzip.compress(newContent.get()));
-                newEncodings.add(ContentEncoding.GZIP);
+                newContent.set(Zstd.compress(newContent.get()));
+                newEncodings.add(ContentEncoding.ZSTD);
             }
 
             // check max content length

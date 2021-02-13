@@ -132,7 +132,7 @@ public final class PostHandler implements ReqHandler {
         // check whether the content should be compressed by bytebin before saving
         boolean compressServerSide = encodings.isEmpty();
         if (compressServerSide) {
-            encodings.add(ContentEncoding.GZIP);
+            encodings.add(ContentEncoding.ZSTD);
         }
 
         String encoding = String.join(",", encodings);

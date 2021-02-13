@@ -42,6 +42,7 @@ public final class ContentEncoding {
 
     public static final String GZIP = "gzip";
     public static final String IDENTITY = "identity";
+    public static final String ZSTD = "zstd";
 
     private static final Splitter COMMA_SPLITTER = Splitter.on(Pattern.compile(",\\s*"));
     private static final Pattern RE_SEMICOLON = Pattern.compile(";\\s*");
