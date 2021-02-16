@@ -101,7 +101,7 @@ public final class PostHandler implements ReqHandler {
         String userAgent = req.header("User-Agent", "null");
         String origin = req.header("Origin", "null");
 
-        long expiry = System.currentTimeMillis() + this.lifetimeMillisByUserAgent.getOrDefault(userAgent, this.lifetimeMillisByUserAgent.getOrDefault(origin, this.lifetimeMillis));
+        long expiry = this.lifetimeMillis > -1L ? System.currentTimeMillis() + this.lifetimeMillisByUserAgent.getOrDefault(userAgent, this.lifetimeMillisByUserAgent.getOrDefault(origin, this.lifetimeMillis)) : -1L;
 
         // check max content length
         if (content.length > this.maxContentLength) return cors(req.response()).code(413).plain("Content too large");

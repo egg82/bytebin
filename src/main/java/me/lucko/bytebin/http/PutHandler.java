@@ -117,7 +117,7 @@ public final class PutHandler implements ReqHandler {
                 return;
             }
 
-            long newExpiry = System.currentTimeMillis() + this.lifetimeMillis;
+            long newExpiry = this.lifetimeMillis > -1L ? System.currentTimeMillis() + this.lifetimeMillis : -1L;
 
             String origin = req.header("Origin", null);
             LOGGER.info("[PUT]\n" +

@@ -105,6 +105,8 @@ public final class Bytebin implements AutoCloseable {
         byte[] indexPage = getResource("/index.html");
         byte[] favicon = getResource("/favicon.ico");
 
+        long lifetimeMinutes = config.getLong("lifetimeMinutes", TimeUnit.DAYS.toMinutes(1));
+
         // setup the web server
         this.server = new BytebinServer(
                 contentStorageHandler,
@@ -130,7 +132,7 @@ public final class Bytebin implements AutoCloseable {
                 favicon,
                 new TokenGenerator(config.getInt("keyLength", 7)),
                 (Content.MEGABYTE_LENGTH * config.getInt("maxContentLengthMb", 10)),
-                TimeUnit.MINUTES.toMillis(config.getLong("lifetimeMinutes", TimeUnit.DAYS.toMinutes(1))),
+                lifetimeMinutes > -1L ? TimeUnit.MINUTES.toMillis(lifetimeMinutes) : -1L,
                 config.getLongMap("lifetimeMinutesByUserAgent").entrySet().stream().collect(ImmutableMap.toImmutableMap(Map.Entry::getKey, e -> TimeUnit.MINUTES.toMillis(e.getValue())))
         );
         this.server.start();

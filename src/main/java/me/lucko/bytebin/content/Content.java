@@ -112,6 +112,6 @@ public final class Content {
     }
 
     public boolean shouldExpire() {
-        return this.getExpiry() < System.currentTimeMillis();
+        return this.expiry >= 0 && this.expiry < System.currentTimeMillis();
     }
 }
