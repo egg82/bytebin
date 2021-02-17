@@ -98,7 +98,7 @@ public final class GetHandler implements ReqHandler {
 
             Resp resp = cors(req.response()).code(200).header("Last-Modified", lastModifiedTime);
 
-            long expires = content.getExpiry() - System.currentTimeMillis();
+            long expires = content.getExpiry() >= 0 ? content.getExpiry() - System.currentTimeMillis() : 31_540_000_000L;
             if (content.isModifiable() || expires <= 0L) {
                 resp.header("Cache-Control", "no-cache");
             } else {
